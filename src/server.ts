@@ -1,1 +1,1 @@
-console.log('iai')
+console.log('iai');
