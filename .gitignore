@@ -26,6 +26,7 @@ coverage
 
 # API keys and secrets
 .env
+.teste
 
 # Dependency directory
 node_modules
