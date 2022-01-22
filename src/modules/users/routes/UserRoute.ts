@@ -6,7 +6,7 @@ const routes = Router();
 const userControler = new UserControler();
 
 routes.get('/', userControler.index);
-routes.get('/:id', userControler.index);
+routes.get('/:id', userControler.show);
 routes.post('/', userControler.create);
 routes.put('/:id', userControler.update);
 routes.delete('/:id', userControler.delete);
