@@ -1,5 +1,6 @@
 import { AppError } from '@shared/errors/appError';
 import { NextFunction, Request, Response } from 'express';
+import winston from 'winston';
 
 export const HandlerError = (
   error: Error,
@@ -8,12 +9,14 @@ export const HandlerError = (
   next: NextFunction,
 ) => {
   if (error instanceof AppError) {
+    winston.log('warn', error.message);
     return response.status(error.statusCode).json({
       status: 'error',
       message: error.message,
     });
   }
-  console.log(error);
+
+  winston.log('error', error.message);
   return response.status(500).json({
     status: 'error',
     message: 'Internal server Error',
