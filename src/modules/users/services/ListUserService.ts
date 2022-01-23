@@ -1,11 +1,13 @@
 import { User } from '@shared/typeorm/entities/users';
-import { UserRepository } from '@shared/typeorm/repositories/UserRepository';
-import { getCustomRepository } from 'typeorm';
+import { IUserRepository } from '../interfaces/IUserRepository';
 
 export class ListUserService {
+  private userRepository: IUserRepository;
+  constructor(Repository: IUserRepository) {
+    this.userRepository = Repository;
+  }
   public async execute(): Promise<User[]> {
-    const userRepository = getCustomRepository(UserRepository);
-    const user = await userRepository.find();
+    const user = await this.userRepository.index();
     return user;
   }
 }

@@ -1,17 +1,18 @@
 import { AppError } from '@shared/errors/appError';
-import { UserRepository } from '@shared/typeorm/repositories/UserRepository';
-import { getCustomRepository } from 'typeorm';
+import { IUserRepository } from '../interfaces/IUserRepository';
 
 export class DeleteUserService {
+  private userRepository: IUserRepository;
+  constructor(Repository: IUserRepository) {
+    this.userRepository = Repository;
+  }
   public async execute(id: string): Promise<void> {
-    const userRepository = getCustomRepository(UserRepository);
-
-    const checkUserExist = await userRepository.findOne(id);
+    const checkUserExist = await this.userRepository.findById(id);
 
     if (!checkUserExist) {
       throw new AppError('Usuário não existe', 400);
     }
 
-    await userRepository.delete(id);
+    await this.userRepository.deleteUser(id);
   }
 }
