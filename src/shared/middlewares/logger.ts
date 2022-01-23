@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import winston from 'winston';
 import { format } from 'date-fns';
+import winston from '../utils/winston';
 
 export const WinstonLogger = (
   require: Request,
@@ -17,13 +17,14 @@ export const WinstonLogger = (
 
   const baseUrl = `${host}${url}`;
 
-  const logMessage = {
+  const loggerOptions = {
     baseUrl,
     method,
     body,
     date,
   };
 
-  winston.log('debug', logMessage);
+  winston.info(loggerOptions);
+
   next();
 };

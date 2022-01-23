@@ -1,6 +1,6 @@
 import { AppError } from '@shared/errors/appError';
 import { NextFunction, Request, Response } from 'express';
-import winston from 'winston';
+import winston from '../utils/winston';
 
 export const HandlerError = (
   error: Error,
