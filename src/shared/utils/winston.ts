@@ -1,17 +1,28 @@
-import winston from 'winston';
+import { createLogger, format, transports } from 'winston';
+const { combine, timestamp, label, printf } = format;
 
-/**
-    levels?: Config.AbstractConfigSetLevels;
-    silent?: boolean;
-    format?: logform.Format;
-    level?: string;
-    exitOnError?: Function | boolean;
-    defaultMeta?: any;
-    transports?: Transport[] | Transport;
-    handleExceptions?: boolean;
-    exceptionHandlers?: any;
- */
+const myFormat = printf(({ message, label, timestamp }) => {
+  return `[${label}]: ${message} ${timestamp}`;
+});
 
-winston.add(new winston.transports.Console());
+const logger = createLogger({
+  transports: [
+    new transports.File({
+      filename: 'debug.log',
+      level: 'debug',
+      format: combine(label({ label: 'INFO' }), timestamp(), myFormat),
+    }),
+    new transports.File({
+      filename: 'warn.log',
+      level: 'warn',
+      format: combine(label({ label: 'WARN' }), timestamp(), myFormat),
+    }),
+    new transports.File({
+      filename: 'error.log',
+      level: 'error',
+      format: combine(label({ label: 'ERROR' }), timestamp(), myFormat),
+    }),
+  ],
+});
 
-export default winston;
+export default logger;

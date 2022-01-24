@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { format } from 'date-fns';
-import winston from '../utils/winston';
+import logger from '../utils/winston';
 
 export const WinstonLogger = (
   require: Request,
@@ -24,7 +24,7 @@ export const WinstonLogger = (
     date,
   };
 
-  winston.info(loggerOptions);
+  logger.debug(JSON.stringify(loggerOptions));
 
   next();
 };
